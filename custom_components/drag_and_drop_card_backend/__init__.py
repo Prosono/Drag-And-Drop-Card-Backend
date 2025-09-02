@@ -62,8 +62,8 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 class KeysView(HomeAssistantView):
     """GET /api/drag_and_drop_card_backend → {"keys": [...]}"""
 
-    url = "/api/drag_and_drop_card_backend"
-    name = "api:drag_and_drop_card_backend:keys"
+    url = "/api/dragdrop_storage"
+    name = "api:dragdrop_storage:keys"
     requires_auth = True
 
     def __init__(self, hass: HomeAssistant) -> None:
@@ -78,8 +78,8 @@ class KeysView(HomeAssistantView):
 class ItemView(HomeAssistantView):
     """GET/POST/DELETE /api/drag_and_drop_card_backend/<key>"""
 
-    url = "/api/drag_and_drop_card_backende/{key}"
-    name = "api:drag_and_drop_card_backend:item"
+    url = "/api/dragdrop_storage/{key}"
+    name = "api:dragdrop_storage:item"
     requires_auth = True
 
     def __init__(self, hass: HomeAssistant) -> None:
