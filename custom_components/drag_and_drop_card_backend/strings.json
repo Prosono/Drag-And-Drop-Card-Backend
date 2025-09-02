@@ -1,0 +1,9 @@
+{
+  "title": "Drag And Drop Card Backend",
+  "config": {
+    "step": {},
+    "abort": {
+      "already_configured": "Already configured."
+    }
+  }
+}
