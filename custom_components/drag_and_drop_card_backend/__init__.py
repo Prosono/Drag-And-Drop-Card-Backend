@@ -6,6 +6,10 @@ from homeassistant.core import HomeAssistant
 from homeassistant.components.http import HomeAssistantView
 from homeassistant.helpers.storage import Store
 
+
+from .const import DOMAIN
+from .views import register_http
+
 DOMAIN = "drag_and_drop_card_backend"
 STORAGE_VERSION = 1
 STORAGE_FILENAME = DOMAIN  # results in .storage/drag_and_drop_card_backend
@@ -46,18 +50,25 @@ class _KVStore:
         return False
 
 
-async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up the DragDrop Storage integration (no config required)."""
-    store = _KVStore(hass)
-    # warm up storage so first request is snappy (safe to ignore result)
-    hass.async_create_task(store.keys())
-
-    hass.data[DOMAIN] = store
-
-    hass.http.register_view(KeysView(hass))
-    hass.http.register_view(ItemView(hass))
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+    """Support YAML (optional): import into config entries if present."""
+    if DOMAIN in config:
+        # Create/refresh a config entry from YAML, then you can delete the YAML line
+        hass.async_create_task(
+            hass.config_entries.flow.async_init(
+                DOMAIN, context={"source": SOURCE_IMPORT}, data={}
+            )
+        )
     return True
 
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Set up when added via the UI."""
+    register_http(hass)
+    return True
+
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Nothing to unload; views stay registered for the lifetime of HA."""
+    return True
 
 class KeysView(HomeAssistantView):
     """GET /api/drag_and_drop_card_backend → {"keys": [...]}"""

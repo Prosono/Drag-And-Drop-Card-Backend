@@ -1,10 +1,11 @@
 {
   "domain": "drag_and_drop_card_backend",
-  "name": "Drag And Drop Card Backend",
+  "name": "Drag & Drop Card Backend",
   "version": "0.1.0",
-  "documentation": "https://github.com/Prosono/Drag-And-Drop-Card-Backend",
-  "requirements": [],
-  "codeowners": ["@prosono"],
-  "dependencies": ["http"],
-  "iot_class": "local_push"
+  "documentation": "https://github.com/Prosono/Drag-And-Drop-Card",
+  "issue_tracker": "https://github.com/Prosono/Drag-And-Drop-Card/issues",
+  "codeowners": ["@Prosono"],
+  "iot_class": "local_push",
+  "config_flow": true,
+  "requirements": []
 }

@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Drag & Drop Card Backend",
+        "description": "Set up the backend service used by the Drag & Drop card."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "This integration is already configured."
+    }
+  }
+}
