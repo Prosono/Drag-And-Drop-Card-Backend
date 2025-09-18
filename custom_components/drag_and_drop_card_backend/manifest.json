@@ -1,7 +1,7 @@
 {
   "domain": "drag_and_drop_card_backend",
   "name": "Drag & Drop Card Backend",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "documentation": "https://github.com/Prosono/Drag-And-Drop-Card",
   "issue_tracker": "https://github.com/Prosono/Drag-And-Drop-Card/issues",
   "codeowners": ["@Prosono"],
