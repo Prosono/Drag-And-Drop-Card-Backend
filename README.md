@@ -12,8 +12,6 @@ Backend for the **Drag And Drop Card** — a Home Assistant integration that sec
 - Exposes a simple backend inside Home Assistant so the card can **save**, **load**, and **delete** its layouts/configs.
 - Uses Home Assistant’s standards (config entries, services, storage helpers) so everything lives neatly within your HA setup.
 
-> Tip: After installing, open **Developer Tools → Services** and search for `drag_and_drop_card_backend` to discover available services.
-
 ---
 
 ## 📦 Installation
@@ -40,9 +38,8 @@ Backend for the **Drag And Drop Card** — a Home Assistant integration that sec
 
 1. Go to **Settings → Devices & Services → “+ Add Integration”**.
 2. Search for **Drag-And-Drop-Card Backend** and follow the prompts.
-3. You can re-open the integration’s **Options** later to tweak behavior if exposed.
+3. Restart Home Assistant after a successful installation.
 
-> There is a release labeled *“v0.1.2 – Config Flow”* indicating out‑of‑box setup via the UI.
 
 ---
 
@@ -56,42 +53,7 @@ The backend is designed to be used by the front-end **Drag And Drop Card**. Typi
 
 ### Discovering services
 
-Open **Developer Tools → Services** and type `drag_and_drop_card_backend`. Common patterns include:
-
-- `drag_and_drop_card_backend.save`
-- `drag_and_drop_card_backend.load`
-- `drag_and_drop_card_backend.delete`
-
-> Service names may differ depending on the current version. Use the Services UI to see the exact names, fields, and examples.
-
-### Example automations (generic)
-
-```yaml
-alias: Save current DnD card layout
-mode: single
-trigger:
-  - platform: event
-    event_type: ui_layout_save_requested
-action:
-  - service: drag_and_drop_card_backend.save
-    data:
-      key: "living_room_layout"
-      payload: "{{ trigger.event.data.layout | tojson }}"
-```
-
-```yaml
-alias: Load DnD card layout
-mode: single
-trigger:
-  - platform: homeassistant
-    event: start
-action:
-  - service: drag_and_drop_card_backend.load
-    data:
-      key: "living_room_layout"
-```
-
----
+The integration is designed so that you do not have to do any manual operations for saving / retreiving saved dashboards. 
 
 ## 📁 Files & Structure
 
