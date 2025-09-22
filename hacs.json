@@ -1,7 +1,6 @@
 {
-  "name": "Drag and Drop Card Backend",
+  "name": "Drag & Drop Card Backend",
   "content_in_root": false,
   "render_readme": true,
-  "country": "no",
   "homeassistant": "2025.8.0"
 }
