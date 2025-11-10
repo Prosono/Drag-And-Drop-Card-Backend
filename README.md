@@ -20,8 +20,10 @@ Backend for the **Drag And Drop Card** — a Home Assistant integration that sec
 
 1. In Home Assistant, open **HACS → Integrations → 3‑dot menu → Custom repositories**.
 2. Add the repository: `https://github.com/Prosono/Drag-And-Drop-Card-Backend` as type **Integration**.
-3. Find **Drag-And-Drop-Card Backend** in HACS and click **Install**.
-4. Restart Home Assistant when prompted.
+3. Find **Drag-And-Drop-Card Backend** in HACS and click **Download**.
+4. Go into "**Settings**" then "**Devices and Services**" And Click "**Add Integration**"
+5. Search for "**Drag And Drop Card Backend**" and select it. 
+4. Restart Home Assistant after the installation is complete.
 
 ### Option B — Manual
 
