@@ -34,14 +34,6 @@ Backend for the **Drag And Drop Card** — a Home Assistant integration that sec
 
 > Your HA config directory is typically `~/.homeassistant` or `/config` (if using HA OS / Supervised).
 
----
-
-## 🔧 Setup (Config Flow)
-
-1. Go to **Settings → Devices & Services → “+ Add Integration”**.
-2. Search for **Drag-And-Drop-Card Backend** and follow the prompts.
-3. Restart Home Assistant after a successful installation.
-
 
 ---
 
