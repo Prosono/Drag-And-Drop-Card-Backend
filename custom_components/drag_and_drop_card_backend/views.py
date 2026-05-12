@@ -21,6 +21,13 @@ DEFAULT_PACKAGES_DIRNAME = "packages"
 def _slugify_token(value: object, fallback: str = "item") -> str:
     raw = str(value or "").strip().lower()
     raw = re.sub(r"\.ya?ml$", "", raw, flags=re.IGNORECASE)
+    slug = re.sub(r"[^a-z0-9]+", "_", raw).strip("_")
+    return slug or fallback
+
+
+def _legacy_slugify_token(value: object, fallback: str = "item") -> str:
+    raw = str(value or "").strip().lower()
+    raw = re.sub(r"\.ya?ml$", "", raw, flags=re.IGNORECASE)
     slug = re.sub(r"[^a-z0-9_-]+", "_", raw).strip("_")
     return slug or fallback
 
@@ -89,7 +96,7 @@ def _package_file_name(storage_key: str, package: dict) -> str:
     key_token = _slugify_token(storage_key, "layout")
     filename = package.get("filename") or package.get("name") or package.get("id") or "package"
     pkg_token = _slugify_token(filename, "package")
-    return f"ddc__{key_token}__{pkg_token}.yaml"
+    return f"ddc_{key_token}_{pkg_token}.yaml"
 
 
 def _package_directory(hass: HomeAssistant) -> Path:
@@ -138,12 +145,21 @@ async def _unlink_if_exists(path: Path) -> bool:
 
 async def _existing_package_filenames(package_dir: Path, storage_key: str) -> set[str]:
     key_token = _slugify_token(storage_key, "layout")
-    pattern = f"ddc__{key_token}__*.yaml"
+    legacy_key_token = _legacy_slugify_token(storage_key, "layout")
+    patterns = [
+        f"ddc_{key_token}_*.yaml",
+        f"ddc_{legacy_key_token}_*.yaml",
+        f"ddc__{key_token}__*.yaml",
+        f"ddc__{legacy_key_token}__*.yaml",
+    ]
 
     def _collect() -> set[str]:
         if not package_dir.exists() or not package_dir.is_dir():
             return set()
-        return {path.name for path in package_dir.glob(pattern) if path.is_file()}
+        found: set[str] = set()
+        for pattern in patterns:
+            found.update(path.name for path in package_dir.glob(pattern) if path.is_file())
+        return found
 
     return await asyncio.to_thread(_collect)
 
@@ -169,7 +185,12 @@ async def _package_sync_diagnostics(hass: HomeAssistant) -> dict:
         includes_dir_merge_named = "!include_dir_merge_named packages" in config_text
         files = []
         if package_dir_exists and package_dir_is_dir:
-            files = sorted(path.name for path in package_dir.glob("ddc__*.yaml"))
+            files = sorted(
+                {
+                    *[path.name for path in package_dir.glob("ddc_*.yaml") if path.is_file()],
+                    *[path.name for path in package_dir.glob("ddc__*.yaml") if path.is_file()],
+                }
+            )
 
         return {
             "ok": True,

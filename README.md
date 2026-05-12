@@ -51,10 +51,10 @@ The backend is designed to be used by the front-end **Drag And Drop Card**. Typi
 When a saved dashboard payload includes `packages`, the backend writes enabled package YAML to:
 
 ```text
-/config/packages/ddc__<storage_key>__<package_slug>.yaml
+/config/packages/ddc_<storage_key>_<package_slug>.yaml
 ```
 
-Only packages where `enabled` is not `false` and `yaml` is not empty are written. When packages are renamed, disabled, removed, or when a dashboard is deleted, matching generated `ddc__*.yaml` files are cleaned up.
+Only packages where `enabled` is not `false` and `yaml` is not empty are written. Filenames use Home Assistant compatible single-underscore slugs because package names are derived from the filename. When packages are renamed, disabled, removed, or when a dashboard is deleted, matching generated `ddc_*.yaml` files are cleaned up. Older legacy `ddc__*.yaml` files are also detected and cleaned up automatically.
 
 Home Assistant must have packages enabled in `configuration.yaml`, for example:
 
@@ -125,7 +125,7 @@ mypy custom_components/drag_and_drop_card_backend
 Inside Home Assistant’s storage (e.g., `.storage`), handled by the integration. You normally don’t need to manage these files manually.
 
 **Where are generated packages stored?**  
-In `/config/packages` using filenames that start with `ddc__`. These files are generated from dashboard payloads and are cleaned up by the backend when the source dashboard or package changes.
+In `/config/packages` using filenames that start with `ddc_`. These files are generated from dashboard payloads and are cleaned up by the backend when the source dashboard or package changes.
 
 **Can I back up the data?**  
 Yes — use HA’s built-in **Backups** (Snapshots) to capture everything.
