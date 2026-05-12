@@ -10,6 +10,7 @@ Backend for the **Drag And Drop Card** — a Home Assistant integration that sec
 
 - Persists UI configurations for the companion **Drag And Drop Card**.
 - Exposes a simple backend inside Home Assistant so the card can **save**, **load**, and **delete** its layouts/configs.
+- Syncs dashboard `packages` payloads to Home Assistant package YAML files.
 - Uses Home Assistant’s standards (config entries, services, storage helpers) so everything lives neatly within your HA setup.
 
 ---
@@ -44,6 +45,35 @@ The backend is designed to be used by the front-end **Drag And Drop Card**. Typi
 - **Save a layout** from the card → backend persists it.
 - **Load a layout** on dashboard render → backend returns it.
 - **Delete a layout** → backend removes it.
+
+### Home Assistant packages
+
+When a saved dashboard payload includes `packages`, the backend writes enabled package YAML to:
+
+```text
+/config/packages/ddc__<storage_key>__<package_slug>.yaml
+```
+
+Only packages where `enabled` is not `false` and `yaml` is not empty are written. When packages are renamed, disabled, removed, or when a dashboard is deleted, matching generated `ddc__*.yaml` files are cleaned up.
+
+Home Assistant must have packages enabled in `configuration.yaml`, for example:
+
+```yaml
+homeassistant:
+  packages: !include_dir_named packages
+```
+
+`!include_dir_merge_named packages` is also supported by Home Assistant setups that prefer that style. The frontend can check package setup with:
+
+```text
+GET /api/dragdrop_storage_package_status
+```
+
+The namespaced alias follows the same route pattern:
+
+```text
+GET /api/drag_and_drop_card_backend_package_status
+```
 
 ### Discovering services
 
@@ -93,6 +123,9 @@ mypy custom_components/drag_and_drop_card_backend
 
 **Where are layouts stored?**  
 Inside Home Assistant’s storage (e.g., `.storage`), handled by the integration. You normally don’t need to manage these files manually.
+
+**Where are generated packages stored?**  
+In `/config/packages` using filenames that start with `ddc__`. These files are generated from dashboard payloads and are cleaned up by the backend when the source dashboard or package changes.
 
 **Can I back up the data?**  
 Yes — use HA’s built-in **Backups** (Snapshots) to capture everything.
