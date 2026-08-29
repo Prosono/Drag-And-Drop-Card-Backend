@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import asyncio
 from aiohttp import web
+from homeassistant.config_entries import ConfigEntry, SOURCE_IMPORT
 from homeassistant.core import HomeAssistant
 from homeassistant.components.http import HomeAssistantView
+from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers.typing import ConfigType
 from homeassistant.helpers.storage import Store
 
 
@@ -13,6 +16,8 @@ from .views import register_http
 DOMAIN = "drag_and_drop_card_backend"
 STORAGE_VERSION = 1
 STORAGE_FILENAME = DOMAIN  # results in .storage/drag_and_drop_card_backend
+
+CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
 
 class _KVStore:
     """Tiny JSON key/value store persisted via .storage."""

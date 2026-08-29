@@ -24,7 +24,29 @@ Backend for the **Drag And Drop Card** — a Home Assistant integration that sec
 3. Find **Drag-And-Drop-Card Backend** in HACS and click **Download**.
 4. Go into "**Settings**" then "**Devices and Services**" And Click "**Add Integration**"
 5. Search for "**Drag And Drop Card Backend**" and select it. 
-4. Restart Home Assistant after the installation is complete.
+6. Restart Home Assistant after the installation is complete.
+
+You can also use this My Home Assistant shortcut:
+
+[![Open your Home Assistant instance and add this repository to HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Prosono&repository=Drag-And-Drop-Card-Backend&category=integration)
+
+### HACS default repository readiness
+
+This repository includes the files needed for HACS validation:
+
+- Root `hacs.json`
+- One integration under `custom_components/drag_and_drop_card_backend`
+- A Home Assistant `manifest.json` with version, documentation, issue tracker and code owner
+- Local brand asset at `custom_components/drag_and_drop_card_backend/brand/icon.png`
+- GitHub Actions for HACS validation and Hassfest
+
+Before submitting this repository to `hacs/default`, make sure the GitHub repository itself has:
+
+- A public GitHub repository with issues enabled
+- A short repository description
+- Relevant GitHub topics, for example `home-assistant`, `hacs`, `hacs-integration`, `custom-component`
+- A full GitHub Release, not only a tag
+- Passing **Validate** and **Validate with hassfest** workflow runs
 
 ### Option B — Manual
 
